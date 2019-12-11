@@ -18,11 +18,13 @@ jobs:
 
     - name: Get dependencies
       run: |
-        go get -v -t -d ./...
+        go get -v -t -d ./... || true
         if [ -f Gopkg.toml ]; then
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
 
     - name: Build
-      run: go build -v .
+      run: go build -v -o bin/check ./cmd/check
+      run: go build -v -o bin/in ./cmd/in
+      run: go build -v -o bin/out ./cmd/out
